@@ -1,0 +1,6 @@
+1 servidor(es) para 1 usuário(s) (1 servidor criado)
+2 servidor(es) para 4 usuário(s) (1 servidor criado)
+2 servidor(es) para 4 usuário(s) (nenhum servidor criado ou removido)
+3 servidor(es) para 5 usuário(s) (1 servidor criado)
+3 servidor(es) para 5 usuário(s) (nenhum servidor criado ou removido)
+1 servidor(es) para 2 usuário(s) (2 removido(s))
