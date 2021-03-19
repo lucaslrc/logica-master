@@ -9,17 +9,18 @@ namespace logica
         {
             try
             {
-                using (var file = new StreamWriter("./output.txt"))
+                using (var file = new StreamWriter("../output.txt"))
                 {
                     GetInput g = new GetInput();
 
                     var ttask = g.Get().Ttask;
                     var umax = g.Get().Umax;
-                    var users = g.Get().Users;
+                    int[] users = g.Get().Users;
 
                     int servidoresAtivos = 0;
                     int servidoresDisponiveis = 0;
                     int usuariosAtivos = 0;
+                    int servidoresRemovidos = 0;
 
                     string[] outputs = new string[ttask + umax + users.Length];
 
@@ -28,9 +29,9 @@ namespace logica
                         if (i > ttask)
                         {
                             servidoresDisponiveis += ttask;
-                            var servidoresRemovidos = servidoresAtivos -= ttask;
+                            servidoresRemovidos = servidoresAtivos - 1;
+                            servidoresAtivos -= ttask;
                             usuariosAtivos -= ttask;
-                            outputs[i] = $"{servidoresAtivos} servidor(es) para {usuariosAtivos} usuário(s) ({servidoresRemovidos} removido(s))";
                         }
                         if (users[i] > umax)
                         {
@@ -41,28 +42,30 @@ namespace logica
                                 servidoresAtivos++;
                             }
                             servidoresAtivos++;
-                            outputs[i] = $"{servidoresAtivos} servidor(es) para {usuariosAtivos} usuário(s) (1 servidor criado)";
+                            file.WriteLine($"{servidoresAtivos} servidor(es) para {usuariosAtivos} usuário(s) (1 servidor criado)");
                         }
                         if (users[i] > 0 && users[i] <= umax)
                         {
                             usuariosAtivos += users[i]; 
-                            if (servidoresDisponiveis > 1)
+                            if (servidoresDisponiveis >= 1)
                             {
                                 servidoresDisponiveis--;
                                 servidoresAtivos++;  
                             }
                             servidoresAtivos++;
-                            outputs[i] = $"{servidoresAtivos} servidor(es) para {usuariosAtivos} usuário(s) (1 servidor criado)";
+                            if (servidoresRemovidos >= 1)
+                            {
+                                file.WriteLine($"{servidoresAtivos} servidor(es) para {usuariosAtivos} usuário(s) ({servidoresRemovidos} removido(s))");
+                            }
+                            else
+                            {
+                                file.WriteLine($"{servidoresAtivos} servidor(es) para {usuariosAtivos} usuário(s) (1 servidor criado)");
+                            }
                         }
                         if (users[i] <= 0)
                         {
-                            outputs[i] = $"{servidoresAtivos} servidor(es) para {usuariosAtivos} usuário(s) (nenhum servidor criado ou removido)";
+                            file.WriteLine($"{servidoresAtivos} servidor(es) para {usuariosAtivos} usuário(s) (nenhum servidor criado ou removido)");
                         }
-                    }
-
-                    foreach (var item in outputs)
-                    {
-                        Console.WriteLine(item);
                     }
                 }
             }
