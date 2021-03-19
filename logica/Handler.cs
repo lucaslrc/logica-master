@@ -25,45 +25,40 @@ namespace logica
 
                     for (int i = 0; i < users.Length; i++)
                     {
+                        if (i > ttask)
+                        {
+                            servidoresDisponiveis += ttask;
+                            var servidoresRemovidos = servidoresAtivos -= ttask;
+                            usuariosAtivos -= ttask;
+                            outputs[i] = $"{servidoresAtivos} servidor(es) para {usuariosAtivos} usuário(s) ({servidoresRemovidos} removido(s))";
+                        }
+                        if (users[i] > umax)
+                        {
+                            usuariosAtivos += users[i];
+                            if (servidoresDisponiveis > 1)
+                            {
+                                servidoresDisponiveis--;
+                                servidoresAtivos++;
+                            }
+                            servidoresAtivos++;
+                            outputs[i] = $"{servidoresAtivos} servidor(es) para {usuariosAtivos} usuário(s) (1 servidor criado)";
+                        }
                         if (users[i] > 0 && users[i] <= umax)
                         {
-                            servidoresAtivos++;
-                            usuariosAtivos = users[i];
-                            if ()
+                            usuariosAtivos += users[i]; 
+                            if (servidoresDisponiveis > 1)
                             {
-                                
+                                servidoresDisponiveis--;
+                                servidoresAtivos++;  
                             }
-                            outputs[i] = $"{servidoresAtivos}";
+                            servidoresAtivos++;
+                            outputs[i] = $"{servidoresAtivos} servidor(es) para {usuariosAtivos} usuário(s) (1 servidor criado)";
                         }
-                        // else if (users[i] == 0)
-                        // {
-                        //     if (servidoresAtivos >= 0)
-                        //     {
-                        //         servidoresAtivos--;
-                        //         servidoresDisponiveis++;
-                        //         outputs[i] = $"{servidoresAtivos}, {servidoresDisponiveis}";
-                        //     }
-                        // }
-                        // else if (users[i] > umax)
-                        // {
-                        //     if (servidoresDisponiveis > 0)
-                        //     {
-                        //         servidoresDisponiveis--;
-                        //         servidoresAtivos++;
-                        //     }
-                        //     else
-                        //     {
-                        //         servidoresAtivos++;
-                        //     }
-                        // }
-                        // else if(users[i] < umax && users[i] > 0)
-                        // {
-                        //     servidoresAtivos--;
-                        //     servidoresDisponiveis++;
-                        // }
+                        if (users[i] <= 0)
+                        {
+                            outputs[i] = $"{servidoresAtivos} servidor(es) para {usuariosAtivos} usuário(s) (nenhum servidor criado ou removido)";
+                        }
                     }
-                    
-                    Console.WriteLine(outputs.Length);
 
                     foreach (var item in outputs)
                     {

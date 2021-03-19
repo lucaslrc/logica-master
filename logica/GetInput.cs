@@ -9,7 +9,7 @@ namespace logica
         {
             try
             {
-                using (var file = new StreamReader("./input.txt"))
+                using (var file = new StreamReader("../input.txt"))
                 {
                     var obj = new Input();
                     string[] inputs = file.ReadLine().Trim().Split();
