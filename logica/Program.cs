@@ -6,8 +6,8 @@ namespace logica
     {
         static void Main(string[] args)
         {
-            var result = new GetInput();
-            result.Get();
+            var result = new Handler();
+            result.Handle();
         }
     }
 }
